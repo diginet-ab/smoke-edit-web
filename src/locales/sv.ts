@@ -1,9 +1,24 @@
 export default {
     root: {
         welcome: 'Välkommen till SIOX Smoke Control Setup',
-        newProject: 'Nytt system',
+        newSystem: 'Nytt system',
         showInstructions: 'Visa instruktioner',
-        wantToImportOld: `Om du vill kunna importera från befintliga filer för SX:ACCESS (.scp) markera här: `,
+        wantToImportOld: `Aktivera knappar för import frpn SX:ACCESS (.scp) filer: `,
+        manageProjects: 'Hantera projekt',
+        newProject: 'Nytt projekt',
+        getProject: 'Hämta projekt',
+        saveProject: 'Spara projekt',
+        exportToCentralUnits: 'Exportera till SX:ACCESS fil(er)',
+        validateProject: 'Validera projektet',
+        orderModules: 'Beställ moduler',
+        system: 'System (centralenheter)',
+        new: 'Ny',
+        change: 'Ändra',
+        remove: 'Ta bort',
+        importDampers: 'Importera spjäll',
+        importAlarmInputs: 'Importera larmingångar',
+        importFromFile: 'Importera från fil',
+        importFromCentralUnitFile: 'Importera från SX:ACCESS-fil',
         instructions: `
     <h3>Instruktioner</h3>
     <p/>
@@ -27,15 +42,31 @@ export default {
     resources: {
         fireDampers: {
             name: 'Brandspjäll',
+            fields: {
+                type: 'Typ',
+                fireCells: 'Brandceller',
+                group: 'Grupp',
+                address: 'Adress',
+            },
         },
         fireCells: {
             name: 'Brandcell |||| Brandceller',
+            fields: {
+                fireDampers: 'Brandspjäll',
+            },
         },
         modules: {
             name: 'Module |||| Moduler',
+            fields: {
+                type: 'Typ',
+                settings: 'Inställningar',
+            },
         },
         alarms: {
             name: 'Larm |||| Larm',
+            fields: {
+                module: 'Modul',
+            },
         },
     },
 }

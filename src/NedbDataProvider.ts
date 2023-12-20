@@ -24,15 +24,12 @@ import Datastore from '@seald-io/nedb'
 import { DataProviderBase, ResourceBase } from './DataProviderBase'
 
 class NedbResource extends ResourceBase {
-    constructor(name: string, public dataStore: Datastore<Document> = new Datastore<Document>()) {
+    constructor(name: string, public dataStore: Datastore<any> = new Datastore<any>({ compareStrings: (a, b) => {
+        const collator = new Intl.Collator([], {numeric: true});
+        return collator.compare(a, b)
+    }, })) {
         super(name)
     }
-}
-
-type Document = {
-    _id?: string
-    createdAt?: Date
-    updatedAt?: Date
 }
 
 export class NedbDataProvider extends DataProviderBase {
@@ -50,11 +47,11 @@ export class NedbDataProvider extends DataProviderBase {
     }
 
     async getMany<RecordType extends RaRecord = any>(resource: string, params: GetManyParams): Promise<GetManyResult<RecordType>> {
-        return {} as GetManyResult<RecordType>
+        return await this._getMany(resource, params)
     }
 
     async getManyReference<RecordType extends RaRecord = any>(resource: string, params: GetManyReferenceParams): Promise<GetManyReferenceResult<RecordType>> {
-        return {} as GetManyReferenceResult<RecordType>
+        return await this._getManyReference(resource, params)
     }
 
     async update<RecordType extends RaRecord = any>(resource: string, params: UpdateParams): Promise<UpdateResult<RecordType>> {
@@ -62,7 +59,7 @@ export class NedbDataProvider extends DataProviderBase {
     }
 
     async updateMany(resource: string, params: UpdateManyParams): Promise<UpdateManyResult> {
-        return await this.updateMany(resource, params)
+        return await this._updateMany(resource, params)
     }
 
     async create<RecordType extends RaRecord = any>(resource: string, params: CreateParams): Promise<CreateResult<RecordType>> {
@@ -81,10 +78,36 @@ export class NedbDataProvider extends DataProviderBase {
         let result: GetOneResult<RecordType>
         const r = this.resources[resource]
         if (r instanceof NedbResource) {
-            const data = await r.dataStore.findAsync({
+            const data = await r.dataStore.findOneAsync<RecordType>({
                 _id: params.id,
             })
-            result = { data: (data.length ? data[0] : { _id: false }) as any }
+            result = { data }
+        } else throw new Error('Invalid resource')
+        this.convertToIds(result)
+        return result
+    }
+
+    async _getMany<RecordType extends RaRecord = any>(resource: string, params: GetManyParams): Promise<GetManyResult<RecordType>> {
+        let result: GetManyResult<RecordType>
+        const r = this.resources[resource]
+        if (r instanceof NedbResource) {
+            const data = await r.dataStore.findAsync({
+                _id: { '$in': params.ids },
+            })
+            result = { data }
+        } else throw new Error('Invalid resource')
+        this.convertToIds(result)
+        return result
+    }
+
+    async _getManyReference<RecordType extends RaRecord = any>(resource: string, params: GetManyReferenceParams): Promise<GetManyReferenceResult<RecordType>> {
+        let result: GetManyReferenceResult<RecordType>
+        const r = this.resources[resource]
+        if (r instanceof NedbResource) {
+            const data = await r.dataStore.findAsync({
+                [params.target]: { "$in": [params.id] },
+            })
+            result = { data, total: data.length }
         } else throw new Error('Invalid resource')
         this.convertToIds(result)
         return result
@@ -156,27 +179,7 @@ export class NedbDataProvider extends DataProviderBase {
                 cursor = cursor.sort({
                     [params.sort.field]: params.sort?.order === 'ASC' ? 1 : -1,
                 })
-            //let dataX = await cursor.exec()
             data = await cursor
-            /*
-                        if (
-                            data.length > 0 &&
-                            (resource === 'parameter' ||
-                                resource === 'io')
-                        ) {
-                            let paths = []
-                            for (let n = 0; n < data.length; n++)
-                                paths.push((data[n] as any).fullPath)
-                            const data2 = await this.readMany(paths)
-                            paths = []
-                            for (let n = 0; n < data.length; n++)
-                                await r.dataStore.update(
-                                    { _id: data[n]._id },
-                                    { $set: { value: data2[n] } }
-                                )
-                            data = await cursor
-                        }
-            */
             result = { data: data as any, total }
             this.convertToIds(result)
         } else throw new Error('Invalid resource')
@@ -188,7 +191,19 @@ export class NedbDataProvider extends DataProviderBase {
         let result: UpdateResult<RecordType>
         const r = this.resources[resource]
         if (r instanceof NedbResource) {
-            await r.dataStore.update({ _id: params.id }, { $set: params.data })
+            await r.dataStore.updateAsync({ _id: params.id }, { $set: params.data })
+            result = { data: params.data as any } as any
+        } else throw new Error('Invalid resource')
+        this.convertToIds(result)
+        return result
+    }
+
+    async _updateMany<RecordType extends RaRecord = any>(resource: string, params: UpdateManyParams) {
+        this.convertTo_Ids(params)
+        let result: UpdateManyResult<RecordType>
+        const r = this.resources[resource]
+        if (r instanceof NedbResource) {
+            await r.dataStore.updateAsync({ _id: params.ids }, { $set: params.data })
             result = { data: params.data as any } as any
         } else throw new Error('Invalid resource')
         this.convertToIds(result)

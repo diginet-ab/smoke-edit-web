@@ -52,25 +52,25 @@ export function Dashboard() {
             </Card>
             <p />
             <Card>
-                <CardHeader title={'Hantera projekt'} />
+                <CardHeader title={translate('root.manageProjects')} />
                 <CardContent>
                     <Stack direction="row" spacing={2}>
-                        <Button variant="contained" color="primary" onClick={() => setProject('New')}>{'Nytt projekt'}</Button>
-                        <Button variant="contained" color="primary" >{'Hämta projekt'}</Button>
-                        <Button variant="contained" color="primary" >{'Spara projekt'}</Button>
+                        <Button variant="contained" color="primary" onClick={() => setProject('New')}>{translate('root.newProject')}</Button>
+                        <Button variant="contained" color="primary" >{translate('root.getProject')}</Button>
+                        <Button variant="contained" color="primary" >{translate('root.saveProject')}</Button>
                     </Stack>
                     <p />
                     <Stack direction="row" spacing={2}>
-                        <Button variant="contained" color="primary">{'Export to SX:ACCESS file(s)'}</Button>
-                        <Button variant="contained" color="primary">{'Validera projektet'}</Button>
-                        <Button variant="contained" color="primary">{'Beställ moduler'}</Button>
+                        <Button variant="contained" color="primary">{translate('root.exportToCentralUnits')}</Button>
+                        <Button variant="contained" color="primary">{translate('root.validateProject')}</Button>
+                        <Button variant="contained" color="primary">{translate('root.orderModules')}</Button>
                     </Stack>
                 </CardContent>
             </Card>
             {project ? <>
                 <p />
                 <Card>
-                    <CardHeader title={'System (centralenheter)'} />
+                    <CardHeader title={translate('root.system')} />
                     <CardContent>
                         <Box sx={{ width: 1 / 4 }}>
                             <FormControl fullWidth>
@@ -90,30 +90,30 @@ export function Dashboard() {
                         </Box>
                         <p />
                         <Stack direction="row" spacing={2}>
-                            <Button variant="contained" color="primary">{'Ny'}</Button>
-                            <Button variant="contained" color="primary">{'Ändra'}</Button>
-                            <Button variant="contained" color="primary">{'Ta bort'}</Button>
-                            { allowImport ? <Button variant="contained" color="primary">{'Importera från SX:ACCESS-fil'}</Button> : <></> }
+                            <Button variant="contained" color="primary">{translate('root.new')}</Button>
+                            <Button variant="contained" color="primary">{translate('root.change')}</Button>
+                            <Button variant="contained" color="primary">{translate('root.remove')}</Button>
+                            { allowImport ? <Button variant="contained" color="primary">{translate('root.importFromCentralUnitFile')}</Button> : <></> }
                         </Stack>
                     </CardContent>
                 </Card>
                 <p />
                 <Card>
-                    <CardHeader title={'Importera spjäll'} />
+                    <CardHeader title={translate('root.importDampers')} />
                     <CardContent>
                         <Stack sx={{ width: 1 / 4 }} spacing={2}>
-                            <Button variant="contained" color="primary">{'Importera från fil'}</Button>
-                            { allowImport ? <Button variant="contained" color="primary">{'Importera från SX:ACCESS-fil'}</Button> : <></> }
+                            <Button variant="contained" color="primary">{translate('root.importFromFile')}</Button>
+                            { allowImport ? <Button variant="contained" color="primary">{translate('root.importFromCentralUnitFile')}</Button> : <></> }
                         </Stack>
                     </CardContent>
                 </Card>
                 <p />
                 <Card>
-                    <CardHeader title={'Importera larmingångar'} />
+                    <CardHeader title={translate('root.importAlarmInputs')} />
                     <CardContent>
                     <Stack sx={{ width: 1 / 4 }} spacing={2}>
-                            <Button variant="contained" color="primary">{'Importera från fil'}</Button>
-                            { allowImport ? <Button variant="contained" color="primary">{'Importera från SX:ACCESS-fil'}</Button> : <></> }
+                            <Button variant="contained" color="primary">{translate('root.importFromFile')}</Button>
+                            { allowImport ? <Button variant="contained" color="primary">{translate('root.importFromCentralUnitFile')}</Button> : <></> }
                         </Stack>
                     </CardContent>
                 </Card>

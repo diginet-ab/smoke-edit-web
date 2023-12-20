@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@seald-io/nedb": "^4.0.3",
+    "@types/next-tick": "^1.0.2",
     "events": "^3.3.0",
     "html-react-parser": "^5.0.10",
+    "next-tick": "^1.1.0",
     "ra-data-json-server": "^4.16.0",
     "ra-language-swedish": "^1.0.0",
     "react": "^18.2.0",

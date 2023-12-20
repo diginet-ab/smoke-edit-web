@@ -30,7 +30,7 @@ To the left is the main menu and to the right a user menu with logout. There are
 
 ### Menu
 
-<img src=".\doc-images\image-20231220012359649.png" align="left" alt="image-20231220012359649" />
+<img src=".\doc-images\image-20231220213535766.png" align="left" alt="image-20231220213535766" />
 
 The start menu is used to create, load and save projects and for importing and exporting data. There is also a button for ordering modules here.
 
