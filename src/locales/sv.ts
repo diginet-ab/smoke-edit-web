@@ -13,7 +13,7 @@ export default {
         orderModules: 'Beställ moduler',
         system: 'System (centralenheter)',
         new: 'Ny',
-        change: 'Ändra',
+        edit: 'Ändra',
         remove: 'Ta bort',
         importDampers: 'Importera spjäll',
         importAlarmInputs: 'Importera larmingångar',

@@ -22,6 +22,7 @@ import { FireCell, FireCellEdit, FireCellList, FireCellShow } from "./fireCells"
 import nextTick from 'next-tick'
 import { AlarmEdit, AlarmList, AlarmShow } from "./Alarms";
 import { ModuleEdit, ModuleList, ModuleShow, Module, SioxModule } from "./Modules";
+import { SystemList, SystemShow, SystemEdit, SystemCreate, System } from "./Systems";
 
 if (!globalThis.process)
 globalThis.process = {} as any
@@ -87,7 +88,7 @@ const lightTheme = {
 
 };
 
-const dataProvider = new NedbDataProvider(['fireDampers', 'fireCells', 'modules', 'alarms'])
+const dataProvider = new NedbDataProvider(['systems', 'fireDampers', 'fireCells', 'modules', 'alarms'])
 
 const testNedb = async () => {
   const fireDampers: FireDamper[] = []
@@ -124,6 +125,7 @@ const testNedb = async () => {
     await dataProvider.create<SioxModule>('modules', { data: { ID: fd.ID, type: fd.type, group: fd.group, address: fd.address} })
   }
   await dataProvider.create<SioxModule>('modules', { data: { ID: 'S27', type: '8S27:017', group: 0, address: 59} })
+  await dataProvider.create<System>('systems', { data: { ID: 'SYS-1', type: '', ip: '192.168.0.234' } })
 }
 
 testNedb()
@@ -131,6 +133,7 @@ testNedb()
 
 export function App() {
   return <Admin darkTheme={darkTheme} i18nProvider={i18nProvider} loginPage={MyLoginPage} theme={lightTheme} authProvider={authProvider} dataProvider={dataProvider} dashboard={Dashboard}>
+    <Resource name="systems" list={SystemList} show={SystemShow} edit={SystemEdit} create={SystemCreate} recordRepresentation={(record) => `${record.ID}`} />
     <Resource name="fireDampers" list={FireDamperList} show={FireDamperShow} edit={FireDamperEdit} recordRepresentation={(record) => `${record.ID}`} />
     <Resource name="fireCells" list={FireCellList} show={FireCellShow} edit={FireCellEdit} recordRepresentation={(record) => `${record.ID}`} />
     <Resource name="alarms" list={AlarmList} show={AlarmShow} edit={AlarmEdit} recordRepresentation={(record) => `${record.ID}`} />
