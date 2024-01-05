@@ -91,6 +91,10 @@ export function Dashboard() {
             <Card>
                 <CardHeader title={translate('root.manageProjects')} />
                 <CardContent>
+                    {(project && !isLastDivVisible) ? <>
+                        Scroll down to show all project features
+                    </> : <></>}
+                    <p />
                     {project ? <>
                         <Stack direction="row" spacing={2}>
                             <MuiTextField
@@ -120,10 +124,6 @@ export function Dashboard() {
                         <Button variant="contained" color="primary">{translate('root.validateProject')}</Button>
                         <Button variant="contained" color="primary">{translate('root.orderModules')}</Button>
                     </Stack>
-                    <p />
-                    {(project && !isLastDivVisible) ? <>
-                        Scroll down to show all project features
-                    </> : <></>}
                 </CardContent>
             </Card>
             {project ? <>
