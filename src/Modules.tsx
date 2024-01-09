@@ -36,13 +36,13 @@ const getSettings = (module: any) => {
 };
 
 export function ModuleList() {
-    const translate = useTranslate();
+    const t = useTranslate();
     return (
         <List emptyWhileLoading sort={{ field: 'ID', order: 'ASC' }}>
             <Datagrid rowClick="show" >
                 <TextField source="ID" label="ID" />
                 <TextField source="type"/>
-                <FunctionField label={translate('resources.modules.fields.settings')} render={(record: any) => { return `${getSettings(record)}`}} />
+                <FunctionField label={t('resources.modules.fields.settings')} render={(record: any) => { return `${getSettings(record)}`}} />
             </Datagrid>
         </List>
     );

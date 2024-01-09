@@ -1,0 +1,46 @@
+{
+  "root": {
+    "welcome": "Welcome to SIOX Smoke Control Setup",
+    "newSystem": "New system",
+    "showInstructions": "Show instructions",
+    "wantToImportOld": "Enable buttons for SX:ACCESS (.scp) file import: ",
+    "manageProjects": "Manage project",
+    "newProject": "New project",
+    "getProject": "Open project",
+    "saveProject": "Save Setup File",
+    "exportToCentralUnits": "Export to file for SX:ACCESS",
+    "validateProject": "Validate project",
+    "orderModules": "Order modules",
+    "system": "Systems (central units)",
+    "new": "New",
+    "edit": "Edit",
+    "remove": "Remove",
+    "importDampers": "Import dampers for",
+    "importAlarmInputs": "Import alarm inputs for",
+    "importFromFile": "Import from file",
+    "importFromCentralUnitFile": "Import from SX:ACCESS file",
+    "instructions": "The information is only stored in your local computer. Multiple projects kan be saved in the same file.<br>Either start from scratch (press NEW SETUP) or fetch your saved work from file by pressing OPEN SETUP FILE.",
+    "items": "Items",
+    "open": "Open Setup File",
+    "newProjectFile": "New Setup",
+    "selectSystem": "Select system",
+    "instructionsw": "Remember to save often (press SAVE SETUP FILE) and <b>ALWAYS</b> before closing the web browser",
+    "instructionsSteps": "Follow the numbered sections 1 - 4 below. Finish by using the buttons A - C in section 1",
+    "instructionsProject": "Create a new project or edit an existing",
+    "instructionsSystem": "A project can include one or more systems each using a SX:ACCESS or SX:NETLINK module, for example for floors or buildings"
+  },
+  "resources": {
+    "fireDampers": {
+      "name": "Fire damper |||| Fire dampers"
+    },
+    "fireCells": {
+      "name": "Fire cell |||| Fire cells"
+    },
+    "modules": {
+      "name": "Module |||| Modules",
+      "fields": {
+        "settings": "Settings"
+      }
+    }
+  }
+}

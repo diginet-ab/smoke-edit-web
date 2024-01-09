@@ -1,0 +1,71 @@
+{
+  "root": {
+    "welcome": "Välkommen till SIOX Smoke Control Setup",
+    "newSystem": "Nytt system",
+    "showInstructions": "Visa instruktioner",
+    "wantToImportOld": "",
+    "manageProjects": "Hantera projekt",
+    "newProject": "Nytt projekt",
+    "getProject": "Hämta projekt",
+    "saveProject": "Spara Setup-fil",
+    "exportToCentralUnits": "Exportera till fil för SX:ACCESS",
+    "validateProject": "Validera projektet",
+    "orderModules": "Beställ moduler",
+    "system": "System (centralenheter)",
+    "new": "Nytt",
+    "edit": "Ändra",
+    "remove": "Ta bort",
+    "importDampers": "Importera spjäll för",
+    "importAlarmInputs": "Importera larmingångar för",
+    "importFromFile": "Importera från fil",
+    "importFromCentralUnitFile": "Importera från SX:ACCESS-fil",
+    "instructions": "Informationen lagras enbart lokalt i din dator. Flera projekt kan sparas i samma fil.<br>Välj antingen att starta från början (välj NY SETUP) eller hämta tidigare sparat arbete med ÖPPNA SETUP-FIL.",
+    "instructionsProject": "Skapa ett nytt projekt eller välj ett befintligt.",
+    "instructionsProject2": "When the project is complete, text for ordering can be created using the ORDER MODULES button.<br>At that time, files for the control units (SX:ACCESS) can also be saved to the computer with EXPORT TO SX:ACCESS FILE.<br>Then use the PC tool SIOX Smoke Editor to download to the devices. In this tool, any advanced settings can also be made.",
+    "instructionsSystem": "Ett projekt kan innehålla ett eller flera system med vardera en SX:ACCESS- eller SX:NETLINK-modul, till exempel för våningsplan eller fastigheter.",
+    "instructionsFireCells": "Importera sedan brandspjäll från Excel eller CSV (avgränsad text). Alternativt lägg till enstaka brandspjäll under huvudmenyn <b>Brandspjäll</b> längst till vänster.\n    <p/>\n    Listan med brandceller uppdateras automatiskt från de brandceller spjällen tillhör.",
+    "instructionsAlarms": "Larmingångar kan importeras från Excel eller CSV (avgränsad text). Alternativt lägg till enstaka larmingångar under huvudmenyn <b>Larm</b> längst till vänster.",
+    "items": "Enheter",
+    "open": "Öppna Setup-fil",
+    "newProjectFile": "Ny Setup",
+    "instructionsw": "Kom ihåg att spara regelbundet (med SPARA SETUP-FIL) och <b>ALLTID</b> innan du stänger webläsaren",
+    "selectSystem": "Välj system",
+    "instructionsSteps": "Följ de numrerade avsnitten 1 - 4 nedan. Avsluta med att använda knapparna A - C under avsnitt 1."
+  },
+  "resources": {
+    "systems": {
+      "name": "System",
+      "fields": {
+        "ip": "IP"
+      }
+    },
+    "fireDampers": {
+      "name": "Brandspjäll",
+      "fields": {
+        "type": "Typ",
+        "fireCells": "Brandceller",
+        "group": "Grupp",
+        "address": "Adress"
+      }
+    },
+    "fireCells": {
+      "name": "Brandcell |||| Brandceller",
+      "fields": {
+        "fireDampers": "Brandspjäll"
+      }
+    },
+    "modules": {
+      "name": "Module |||| Moduler",
+      "fields": {
+        "type": "Typ",
+        "settings": "Inställningar"
+      }
+    },
+    "alarms": {
+      "name": "Larm |||| Larm",
+      "fields": {
+        "module": "Modul"
+      }
+    }
+  }
+}

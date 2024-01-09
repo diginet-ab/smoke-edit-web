@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { QueryClient } from '@tanstack/react-query'
 import {
     DataProvider,
     GetListParams,
@@ -36,7 +37,16 @@ export type Document = {
 
 export class DataProviderBase implements DataProvider {
     protected resources: { [index: string]: ResourceBase } = {}
-    constructor(public resourceNames?: string[]) {
+    constructor(public resourceNames?: string[], public queryClient?: QueryClient) {
+    }
+    async getAsObject(): Promise<any> {
+        return {}
+    }
+    async clearAll() {
+        this.resourceNames?.map(async name => {
+            if (this.queryClient)
+                this.queryClient.invalidateQueries({ queryKey: ['resource.' + name] })
+        })
     }
     async getList<RecordType extends RaRecord = any>(
         resource: string,
@@ -71,15 +81,27 @@ export class DataProviderBase implements DataProvider {
     async create<RecordType extends RaRecord = any>(
         resource: string,
         params: CreateParams
-    ): Promise<CreateResult<RecordType>> { return undefined as unknown as CreateResult<RecordType> }
+    ): Promise<CreateResult<RecordType>> { 
+        if (this.queryClient)
+            this.queryClient.invalidateQueries({ queryKey: ['resource.' + resource] })
+        return undefined as unknown as CreateResult<RecordType> 
+    }
 
     async delete<RecordType extends RaRecord = any>(
         resource: string,
         params: DeleteParams
-    ): Promise<DeleteResult<RecordType>> { return undefined as unknown as DeleteResult<RecordType> }
+    ): Promise<DeleteResult<RecordType>> {
+        if (this.queryClient)
+            this.queryClient.invalidateQueries({ queryKey: ['resource.' + resource] })
+        return undefined as unknown as DeleteResult<RecordType> 
+    }
 
     async deleteMany(
         resource: string,
         params: DeleteManyParams
-    ): Promise<DeleteManyResult> { return undefined as unknown as DeleteManyResult }
+    ): Promise<DeleteManyResult> { 
+        if (this.queryClient)
+            this.queryClient.invalidateQueries({ queryKey: ['resource.' + resource] })
+        return undefined as unknown as DeleteManyResult 
+    }
 }

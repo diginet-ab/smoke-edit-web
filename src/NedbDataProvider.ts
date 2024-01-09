@@ -22,6 +22,7 @@ import {
 } from 'ra-core'
 import Datastore from '@seald-io/nedb'
 import { DataProviderBase, ResourceBase } from './DataProviderBase'
+import { QueryClient } from '@tanstack/react-query';
 
 class NedbResource extends ResourceBase {
     constructor(name: string, public dataStore: Datastore<any> = new Datastore<any>({ compareStrings: (a, b) => {
@@ -33,11 +34,26 @@ class NedbResource extends ResourceBase {
 }
 
 export class NedbDataProvider extends DataProviderBase {
-    constructor(public resourceNames?: string[], public searchFields?: { [key: string]: string }) {
-        super()
+    constructor(public resourceNames?: string[], public searchFields?: { [key: string]: string }, public queryClient?: QueryClient) {
+        super(resourceNames, queryClient)
         if (resourceNames) {
             for (const name of resourceNames) this.resources[name] = new NedbResource(name)
         }
+    }
+    async getAsObject(): Promise<any> {
+        const result = this.resourceNames?.reduce(async (previous, current, index, array) => {
+            let result: any = await previous
+            result[current] = (await this._getList(current, { filter: {}, pagination: { page: 1, perPage: 1000000 }, sort: { field: 'id', order: 'ASC' } })).data
+            return result
+        }, new Promise(res => res({})))
+        return result
+    }
+    async clearAll() {
+        this.resourceNames?.map(async name => {
+            (this.resources[name] as NedbResource).dataStore.dropDatabase()
+            this.resources[name] = new NedbResource(name)
+        })
+        super.clearAll()
     }
     async getList<RecordType extends RaRecord = any>(resource: string, params: GetListParams): Promise<GetListResult<RecordType>> {
         return await this._getList(resource, params)
@@ -63,15 +79,20 @@ export class NedbDataProvider extends DataProviderBase {
     }
 
     async create<RecordType extends RaRecord = any>(resource: string, params: CreateParams): Promise<CreateResult<RecordType>> {
+        super.create(resource, params)
         return await this._create(resource, params)
     }
 
     async delete<RecordType extends RaRecord = any>(resource: string, params: DeleteParams): Promise<DeleteResult<RecordType>> {
-        return await this._delete(resource, params)
+        super.delete(resource, params)
+        const result = await this._delete(resource, params)
+        return result
     }
 
     async deleteMany(resource: string, params: DeleteManyParams): Promise<DeleteManyResult> {
-        return await this._deleteMany(resource, params)
+        super.deleteMany(resource, params)
+        const result = await this._deleteMany(resource, params)
+        return result
     }
 
     async _getOne<RecordType extends RaRecord = any>(resource: string, params: GetOneParams): Promise<GetOneResult<RecordType>> {
